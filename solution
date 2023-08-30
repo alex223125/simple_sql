@@ -1,0 +1,62 @@
+
+PREPARE SCHEMA:
+create table countries (id integer, name varchar(100), region varchar(100));
+create table occurrences (id integer, country_id integer, occurrences integer);
+
+ADD DATA:
+insert into countries (id, name, region) values (1, 'Bhutan', 'Asia');
+insert into countries (id, name, region) values (2, 'Colombia', 'South America');
+insert into countries (id, name, region) values (3, 'Japan', 'Asia');
+insert into countries (id, name, region) values (4, 'Ecuador', 'South America');
+insert into countries (id, name, region) values (5, 'Serbia', 'Europe');
+
+insert into occurrences (id, country_id, occurrences) values (1, 1, 35);
+insert into occurrences (id, country_id, occurrences) values (2, 3, 50);
+insert into occurrences (id, country_id, occurrences) values (3, 5, 23);
+insert into occurrences (id, country_id, occurrences) values (4, 1, 45);
+insert into occurrences (id, country_id, occurrences) values (5, 4, 38);
+insert into occurrences (id, country_id, occurrences) values (6, 2, 34);
+insert into occurrences (id, country_id, occurrences) values (7, 5, 23);
+
+
+QUERIES:
+
+SELECT * FROM countries;
+SELECT * FROM occurrences;
+
+
+SELECT region, SUM(occurrences) as occurrences
+FROM countries 
+INNER JOIN occurrences
+ON countries.id = occurrences.country_id
+GROUP BY region
+
+
+RESULTS:
+
+countries
+id	name		region
+1	Bhutan		Asia
+2	Colombia	South America
+3	Japan		Asia
+4	Ecuador	    South America
+5	Serbia		Europe
+
+
+occurrences
+id	country_id	occurrences
+1	1		    35
+2	3		    50
+3	5		    23
+4	1		    45
+5	4		    38
+6	2		    34
+7	5	        23
+
+
+region		occurrences
+South America	72
+Asia		    130
+Europe		    46
+
+
